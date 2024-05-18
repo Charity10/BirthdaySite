@@ -1,32 +1,38 @@
-const secondaryText = document.getElementsByClassName('section__container-text');
+import { createClient } from "smtpexpress";
 
-const scrollRevealOption = {
-  distance: "50px",
-  origin: "bottom",
-  duration: 1000,
-};
 
-scrollReveal().reveal(".section__container-text", {
-  ...scrollRevealOption,
-});
-scrollReveal().reveal(".main-heading-1", {
-  ...scrollRevealOption,
-  origin: "left",
-  delay: 500,
-});
+    document.getElementById('contact-btn').addEventListener('click', async () => {
+      const firstName = document.getElementById('name').value;
+      const recipientEmail = document.getElementById('email').value;
+      const message = document.getElementById('message').value;
 
-scrollReveal().reveal(".main-heading-2", {
-  ...scrollRevealOption,
-  origin: "right",
-  delay: 1000,
-});
-scrollReveal().reveal(".btn", {
-  ...scrollRevealOption,
-  delay: 1500,
-});
-scrollReveal().reveal(".link__opt", {
-  ...scrollRevealOption,
-  origin: "top",
-  interval: 300,
-  delay: 2000,
-});
+      const smtpexpressClient = createClient({
+        projectSecret: "311f0c72175e900415baf6c5c67a782018bffd9908aa2ca7dd",
+        projectId: "sm0pid-n1tsWXjLgFCWWFGMwB2JwJa_f"
+      
+      });
+
+
+      try {
+        const result = await smtpexpressClient.sendApi.sendMail({
+          subject:`${firstName} Sends a message through your Birthday site`,
+          
+          message: `Hello there! 
+          ${message}
+          Email: ${recipientEmail}`,
+          sender: {
+            name: 'smtpExpress' ,
+            email: "sm0pid-allfF1rxQJs-x2SMhVax9eP91@projects.smtpexpress.com"
+          },
+          recipients: {
+            email: "umercy001@gmail.com",
+          }
+        });
+
+        console.log('Email sent successfully:', result);
+        alert('Email sent successfully!');
+      } catch (error) {
+        console.error('Error sending email:', error);
+        alert('Error sending email. Please check the console for details.');
+      }
+    });

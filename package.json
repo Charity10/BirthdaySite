@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "smtpexpress": "^0.0.14"
+  }
+}
